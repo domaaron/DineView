@@ -23,6 +23,14 @@ namespace DineView.Application.infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Restaurant>().OwnsOne(r => r.Address);
+
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Menus)
+                .WithMany(c => c.Categories);
+
+            modelBuilder.Entity<Category>()
+                .HasIndex(c => c.Designation)
+                .IsUnique();
         }
 
         public void Seed()
@@ -30,7 +38,7 @@ namespace DineView.Application.infrastructure
             Randomizer.Seed = new Random(2169);
 
             var category = new Faker<Category>("en").CustomInstantiator(c => new Category(
-                name: c.Commerce.ProductMaterial()
+                designation: $"{c.Commerce.ProductMaterial()} {c.Commerce.ProductMaterial()}"
                 ))
                 .Generate(10)
                 .ToList();
@@ -38,7 +46,7 @@ namespace DineView.Application.infrastructure
             SaveChanges();
 
             var cuisine = new Faker<Cuisine>("en").CustomInstantiator(c => new Cuisine(
-                name: c.Commerce.ProductAdjective()
+                style: $"{c.Commerce.ProductAdjective()} {c.Commerce.ProductAdjective()}"
                 ))
                 .Generate(10)
                 .ToList();
@@ -46,7 +54,8 @@ namespace DineView.Application.infrastructure
             SaveChanges();
 
             var dish = new Faker<Dish>("en").CustomInstantiator(d => new Dish(
-                name: d.Commerce.ProductName()
+                name: d.Commerce.ProductName(),
+                description: d.Commerce.ProductDescription()
                 ))
                 .Generate(10)
                 .ToList();
@@ -54,10 +63,7 @@ namespace DineView.Application.infrastructure
             SaveChanges();
 
             var menu = new Faker<Menu>("en").CustomInstantiator(m => new Menu(
-                dishName: m.Random.ListItem(dish),
-                categoryName: m.Random.ListItem(category),
-                description: m.Commerce.ProductDescription(),
-                price: m.Random.Decimal(3, 50)
+                price: Math.Round(m.Random.Decimal(3, 50))
                 ))
                 .Generate(10)
                 .ToList();
@@ -69,7 +75,8 @@ namespace DineView.Application.infrastructure
                 address: new Address(r.Address.StreetName(), r.Address.StreetSuffix()),
                 openingTime: r.Date.BetweenTimeOnly(new TimeOnly(8, 0, 0), new TimeOnly(11, 0, 0)),
                 closedTime: r.Date.BetweenTimeOnly(new TimeOnly(20, 0, 0), new TimeOnly(22, 0, 0)),
-                cuisineName: r.Random.ListItem(cuisine),
+                cuisine: r.Random.ListItem(cuisine),
+                menu: r.Random.ListItem(menu),
                 isOrderable: r.Random.Bool(),
                 rating: $"{r.Random.Int(1, 10)} / 10",
                 tel: r.Phone.PhoneNumber(),
