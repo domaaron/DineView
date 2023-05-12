@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DineView.Webapp", "DineView.Webapp\DineView.Webapp.csproj", "{E6048C91-0075-4F68-A74A-FED0D47D1EEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DineView.Application", "DineView.Application\DineView.Application.csproj", "{BE741654-9997-40C3-9E4C-BF40837386B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DineView.Test", "DineView.Test\DineView.Test.csproj", "{A1A0D330-910D-4834-A14C-A014952373AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E6048C91-0075-4F68-A74A-FED0D47D1EEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6048C91-0075-4F68-A74A-FED0D47D1EEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6048C91-0075-4F68-A74A-FED0D47D1EEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6048C91-0075-4F68-A74A-FED0D47D1EEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE741654-9997-40C3-9E4C-BF40837386B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE741654-9997-40C3-9E4C-BF40837386B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE741654-9997-40C3-9E4C-BF40837386B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE741654-9997-40C3-9E4C-BF40837386B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1A0D330-910D-4834-A14C-A014952373AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1A0D330-910D-4834-A14C-A014952373AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1A0D330-910D-4834-A14C-A014952373AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1A0D330-910D-4834-A14C-A014952373AE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
