@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace DineView.Test
 {
-    {
     [Collection("Sequential")]
-    public class BookingContextTests
+    public class DineContextTests
     {
         private DineContext GetDatabase(bool deleteDb = false)
         {
             var db = new DineContext(new DbContextOptionsBuilder()
-                .UseSqlite("Data Source = FlightBooking.db")
-                .UseLazyLoadingProxies()
+                .UseSqlite("Data Source = DineView.db")
                 .Options);
             if (deleteDb)
             {
@@ -36,7 +34,7 @@ namespace DineView.Test
         public void SeedDatabaseTest()
         {
             using var db = GetDatabase(deleteDb: true);
-            //db.Seed();
+            db.Seed();
         }
     }
 }
