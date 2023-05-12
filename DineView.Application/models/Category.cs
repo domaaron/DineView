@@ -11,9 +11,9 @@ namespace DineView.Application.models
     [Table("Category")]
     public class Category
     {
-        public Category(string name)
+        public Category(string designation)
         {
-            Name = name;
+            Designation = designation;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -22,6 +22,7 @@ namespace DineView.Application.models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public String Name { get; set; }
+        public String Designation { get; set; }
+        public List<Menu> Menus { get; } = new();
     }
 }

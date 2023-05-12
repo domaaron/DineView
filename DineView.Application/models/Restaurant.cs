@@ -12,7 +12,7 @@ namespace DineView.Application.models
     [Table("Restaurant")]
     public class Restaurant
     {
-        public Restaurant(string name, Address address, TimeOnly openingTime, TimeOnly closedTime, Cuisine cuisine, Cuisine cuisineName, bool isOrderable, string rating, string tel, string uRL)
+        public Restaurant(string name, Address address, TimeOnly openingTime, TimeOnly closedTime, Cuisine cuisine, Menu menu, bool isOrderable, string rating, string tel, string uRL)
         {
             Name = name;
             Guid = Guid.NewGuid();
@@ -20,7 +20,9 @@ namespace DineView.Application.models
             OpeningTime = openingTime;
             ClosedTime = closedTime;
             Cuisine = cuisine;
-            CuisineName = cuisineName;
+            CuisineStyle = cuisine.Style;
+            Menu = menu;
+            MenuId = menu.Id;
             IsOrderable = isOrderable;
             Rating = rating;
             Tel = tel;
@@ -38,8 +40,10 @@ namespace DineView.Application.models
 
         public TimeOnly OpeningTime { get; set; }
         public TimeOnly ClosedTime { get; set; }
-        public Cuisine Cuisine { get; set; }
-        public Cuisine CuisineName { get; set; }
+        public virtual Cuisine Cuisine { get; set; }
+        public string CuisineStyle { get; set; }
+        public virtual Menu Menu { get; set; }
+        public int MenuId { get; set; }
         public bool IsOrderable { get; set; }
         public string Rating { get; set; }
         public string Tel { get; set; }
