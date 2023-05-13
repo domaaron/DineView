@@ -1,25 +1,29 @@
-var builder = WebApplication.CreateBuilder(args);
+using DineView.Application.infrastructure;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
+var opt = new DbContextOptionsBuilder()
+    .UseSqlite("Data source=DineView.db")  // Keep connection open (only needed with SQLite in memory db)
+    .Options;
+
+using (var db = new DineContext(opt))
+{
+    db.Database.EnsureDeleted();
+    db.Database.EnsureCreated();
+    db.Seed();
+}
+
+    var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+builder.Services.AddDbContext<DineContext>(opt =>
+{
+    opt.UseSqlite("Data source=DineView.db");
+});
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
 app.MapRazorPages();
-
 app.Run();
