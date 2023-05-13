@@ -1,5 +1,13 @@
 ﻿@page
 @model DineView.Webapp.Pages.Restaurants.IndexModel
+@section head
+{
+    <style>
+        .notOrderable {
+            background-color: lightgray;
+        }
+    </style>
+}
 
 <h3>Restaurants in the database</h3>
 <p>@Model.Restaurants.Count Restaurants found. Created at @DateTime.Now.ToString("HH:mm")</p>
@@ -8,6 +16,7 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Menus</th>
             <th>Address</th>
             <th>District</th>
             <th>OpeningTime</th>
@@ -17,22 +26,26 @@
             <th>Rating</th>
             <th>Tel.</th>
             <th>URL</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach(var r in Model.Restaurants)
         {
-            <tr>
+            var cssClass = r.IsOrderable ? "notOrderable" : "orderable";
+            <tr class="@cssClass">
                 <td>@r.Name</td>
-                <td>@r.Address.Street</td>
-                <td>@r.Address.District</td>
+                <td>@r.menusCount</td>
+                <td>@r.Street</td>
+                <td>@r.District</td>
                 <td>@r.OpeningTime</td>
                 <td>@r.ClosedTime</td>
-                <td>@r.Cuisine</td>
+                <td>@r.CuisineStyle</td>
                 <td>@r.IsOrderable</td>
                 <td>@r.Rating</td>
                 <td>@r.Tel</td>
                 <td>@r.URL</td>
+                <td><a asp-page="/Restaurants/Details" asp-route-guid="@r.Guid">Details</a></td>
             </tr>
         }
     </tbody>
