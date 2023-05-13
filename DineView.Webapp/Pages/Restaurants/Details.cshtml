@@ -1,0 +1,29 @@
+﻿@page "{guid}"
+@model DineView.Webapp.Pages.Restaurants.DetailsModel
+
+<h3>Details of the restaurant @Model.Restaurant.Name</h3>
+<h4>Menu</h4>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Price</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Calories</th>
+            <th>IsSpicy</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model.Restaurant.Menus.OrderBy(m => m.Dish.Name))
+        {
+            <tr>
+                <td>@m.Price</td>
+                <td>@m.Dish.Name</td>
+                <td>@m.Dish.Description</td>
+                <td>@m.Dish.Calories</td>
+                <td>@m.Dish.IsSpicy</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
