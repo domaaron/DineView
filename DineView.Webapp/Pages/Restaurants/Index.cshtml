@@ -1,0 +1,39 @@
+﻿@page
+@model DineView.Webapp.Pages.Restaurants.IndexModel
+
+<h3>Restaurants in the database</h3>
+<p>@Model.Restaurants.Count Restaurants found. Created at @DateTime.Now.ToString("HH:mm")</p>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>District</th>
+            <th>OpeningTime</th>
+            <th>ClosedTime</th>
+            <th>Cuisine</th>
+            <th>isOrderable</th>
+            <th>Rating</th>
+            <th>Tel.</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var r in Model.Restaurants)
+        {
+            <tr>
+                <td>@r.Name</td>
+                <td>@r.Address.Street</td>
+                <td>@r.Address.District</td>
+                <td>@r.OpeningTime</td>
+                <td>@r.ClosedTime</td>
+                <td>@r.Cuisine</td>
+                <td>@r.IsOrderable</td>
+                <td>@r.Rating</td>
+                <td>@r.Tel</td>
+                <td>@r.URL</td>
+            </tr>
+        }
+    </tbody>
+</table>
