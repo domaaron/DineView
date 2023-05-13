@@ -23,10 +23,8 @@ namespace DineView.Application.infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Restaurant>().OwnsOne(r => r.Address);
-
-            modelBuilder.Entity<Category>()
-                .HasMany(c => c.Menus)
-                .WithMany(c => c.Categories);
+            modelBuilder.Entity<Restaurant>().HasAlternateKey(r => r.Guid);
+            modelBuilder.Entity<Restaurant>().Property(r => r.Guid).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Category>()
                 .HasIndex(c => c.Designation)
@@ -44,7 +42,7 @@ namespace DineView.Application.infrastructure
                 .ToList();
             Categories.AddRange(category);
             SaveChanges();
-
+            
             var cuisine = new Faker<Cuisine>("en").CustomInstantiator(c => new Cuisine(
                 style: $"{c.Commerce.ProductAdjective()} {c.Commerce.ProductAdjective()}"
                 ))
@@ -52,22 +50,16 @@ namespace DineView.Application.infrastructure
                 .ToList();
             Cuisines.AddRange(cuisine);
             SaveChanges();
-
+            
             var dish = new Faker<Dish>("en").CustomInstantiator(d => new Dish(
                 name: d.Commerce.ProductName(),
-                description: d.Commerce.ProductDescription()
+                description: d.Commerce.ProductDescription(),
+                calories: (float)Math.Round(d.Random.Float(10, 500)),
+                isSpicy: d.Random.Bool()
                 ))
-                .Generate(10)
+                .Generate(100)
                 .ToList();
             Dishes.AddRange(dish);
-            SaveChanges();
-
-            var menu = new Faker<Menu>("en").CustomInstantiator(m => new Menu(
-                price: Math.Round(m.Random.Decimal(3, 50))
-                ))
-                .Generate(10)
-                .ToList();
-            Menus.AddRange(menu);
             SaveChanges();
 
             var restaurant = new Faker<Restaurant>().CustomInstantiator(r => new Restaurant(
@@ -76,7 +68,6 @@ namespace DineView.Application.infrastructure
                 openingTime: r.Date.BetweenTimeOnly(new TimeOnly(8, 0, 0), new TimeOnly(11, 0, 0)),
                 closedTime: r.Date.BetweenTimeOnly(new TimeOnly(20, 0, 0), new TimeOnly(22, 0, 0)),
                 cuisine: r.Random.ListItem(cuisine),
-                menu: r.Random.ListItem(menu),
                 isOrderable: r.Random.Bool(),
                 rating: $"{r.Random.Int(1, 10)} / 10",
                 tel: r.Phone.PhoneNumber(),
@@ -85,6 +76,16 @@ namespace DineView.Application.infrastructure
                 .Generate(10)
                 .ToList();
             Restaurants.AddRange(restaurant);
+            SaveChanges();
+
+            var menu = new Faker<Menu>("en").CustomInstantiator(m => new Menu(
+                price: Math.Round(m.Random.Decimal(3, 50)),
+                restaurant: m.Random.ListItem(restaurant),
+                dish: m.Random.ListItem(dish)
+                ))
+                .Generate(100)
+                .ToList();
+            Menus.AddRange(menu);
             SaveChanges();
         }
     }
