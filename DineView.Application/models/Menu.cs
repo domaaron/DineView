@@ -8,9 +8,13 @@ namespace DineView.Application.models
 {
     public class Menu
     {
-        public Menu(decimal price)
+        public Menu(decimal price, Restaurant restaurant, Dish dish)
         {
             Price = price;
+            Restaurant = restaurant;
+            RestaurantId = restaurant.Id;
+            Dish = dish;
+            DishId = dish.Id;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -19,8 +23,9 @@ namespace DineView.Application.models
 
         public int Id { get; private set; }
         public decimal Price { get; set; }
-        protected List<Dish> _dishes = new();
-        public virtual IReadOnlyCollection<Dish> Dishes => _dishes;
-        public List<Category> Categories { get; } = new();
+        public virtual Restaurant Restaurant { get; set; }
+        public int RestaurantId { get; set; }
+        public virtual Dish Dish { get; set; }
+        public int DishId { get; set; }
     }
 }
