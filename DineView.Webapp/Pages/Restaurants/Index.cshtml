@@ -45,7 +45,10 @@
                 <td>@r.Rating</td>
                 <td>@r.Tel</td>
                 <td>@r.URL</td>
-                <td><a asp-page="/Restaurants/Details" asp-route-guid="@r.Guid">Details</a></td>
+                <td>
+                    <a asp-page="/Restaurants/Details" asp-route-guid="@r.Guid">Details</a>
+                    <a asp-page="/Restaurants/Edit" asp-route-guid="@r.Guid">Edit</a>
+                </td>
             </tr>
         }
     </tbody>
