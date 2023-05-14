@@ -1,0 +1,51 @@
+﻿@page "{guid}"
+@model DineView.Webapp.Pages.Restaurants.EditModel
+@{
+}
+
+<form method="post">
+    <input type="hidden" asp-for="Restaurant.Guid"/>
+
+    <div class="form-group">
+        <label asp-for="Restaurant.Name">Name</label>
+        <input type="text" class="form-control" asp-for="Restaurant.Name" />
+        <span class="text-danger" asp-validation-for="Restaurant.Name"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <label asp-for="Restaurant.OpeningTime">OpeningTime</label>
+            <input type="time" class="form-control" asp-for="Restaurant.OpeningTime" />
+            <span class="text-danger" asp-validation-for="Restaurant.OpeningTime"></span>
+        </div>
+        <div class="col-12 col-sm-6">
+            <label asp-for="Restaurant.ClosedTime">ClosedTime</label>
+            <input type="time" class="form-control" asp-for="Restaurant.ClosedTime" />
+            <span class="text-danger" asp-validation-for="Restaurant.ClosedTime"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-sm-6">
+            <label asp-for="Restaurant.URL">URL</label>
+            <input type="url" class="form-control" asp-for="Restaurant.URL" />
+            <span class="text-danger" asp-validation-for="Restaurant.URL"></span>
+        </div>
+
+        <div class="col-12 col-sm-6">
+            <label asp-for="Restaurant.Tel">Tel</label>
+            <input type="tel" class="form-control" asp-for="Restaurant.Tel" />
+            <span class="text-danger" asp-validation-for="Restaurant.Tel"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-check">
+            <label class="form-check-label" asp-for="Restaurant.IsOrderable">IsOrderable</label>
+            <input type="checkbox" class="form-check-input" asp-for="Restaurant.IsOrderable" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Send</button>
+    
+</form>
