@@ -1,4 +1,5 @@
 using DineView.Application.infrastructure;
+using DineView.Webapp.Dto;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,12 +15,14 @@ using (var db = new DineContext(opt))
     db.Seed();
 }
 
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
+
 // Add services to the container.
 builder.Services.AddDbContext<DineContext>(opt =>
 {
     opt.UseSqlite("Data source=DineView.db");
 });
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
