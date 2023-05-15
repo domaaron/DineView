@@ -15,24 +15,6 @@
         </div>
 
         <div class="col-6">
-            <label asp-for="NewMenu.Price">Price</label>
-            <input class="form-control" asp-for="NewMenu.Price" />
-            <small>
-                <span class="text-danger" asp-validation-for="NewMenu.Price"></span>
-            </small>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <label asp-for="NewMenu.Name">Name</label>
-            <input type="text" class="form-control" asp-for="NewMenu.Name" />
-            <small>
-                <span class="text-danger" asp-validation-for="NewMenu.Name"></span>
-            </small>
-        </div>
-
-        <div class="col-sm-6">
             <label asp-for="NewMenu.Description">Description</label>
             <input type="text" class="form-control" asp-for="NewMenu.Description" />
             <small>
@@ -43,13 +25,23 @@
 
     <div class="row">
         <div class="col-sm-6">
+            <label asp-for="NewMenu.Price">Price</label>
+            <input class="form-control" asp-for="NewMenu.Price" />
+            <small>
+                <span class="text-danger" asp-validation-for="NewMenu.Price"></span>
+            </small>
+        </div>
+
+        <div class="col-sm-6">
             <label asp-for="NewMenu.Calories">Calories</label>
             <input type="text" class="form-control" asp-for="NewMenu.Calories" />
             <small>
                 <span class="text-danger" asp-validation-for="NewMenu.Calories"></span>
             </small>
         </div>
+    </div>
 
+    <div class="row">
         <div>
             <label class="form-check-label" asp-for="NewMenu.IsSpicy">IsSpicy</label>
             <input type="checkbox" class="form-check-input" asp-for="NewMenu.IsSpicy" />
