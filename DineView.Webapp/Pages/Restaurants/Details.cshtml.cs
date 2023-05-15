@@ -63,16 +63,6 @@ namespace DineView.Webapp.Pages.Restaurants
         }
         public IActionResult OnGet(Guid guid)
         {
-            var restaurant = _db.Restaurants
-                .Include(r => r.Menus)
-                .ThenInclude(m => m.Dish)
-                .FirstOrDefault(r => r.Guid == guid);
-
-            if (restaurant == null)
-            {
-                return RedirectToPage("/Restaurants/Index");
-            }
-            Restaurant = restaurant;
             return Page();
         }
 
