@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DineView.Application.models;
+using System;
 
 namespace DineView.Webapp.Dto
 {
@@ -9,6 +10,10 @@ namespace DineView.Webapp.Dto
         {
             CreateMap<RestaurantDto, Restaurant>();
             CreateMap<Restaurant, RestaurantDto>();
+            CreateMap<MenuDto, Menu>()
+                .ForMember(
+                    m => m.Guid,
+                    opt => opt.MapFrom(m => m.guid == default ? Guid.NewGuid() : m.guid));
         }
     }
 }
