@@ -15,6 +15,7 @@ namespace DineView.Application.models
             RestaurantId = restaurant.Id;
             Dish = dish;
             DishId = dish.Id;
+            Guid = Guid.NewGuid();
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -27,5 +28,6 @@ namespace DineView.Application.models
         public int RestaurantId { get; set; }
         public virtual Dish Dish { get; set; }
         public int DishId { get; set; }
+        public Guid Guid { get; set; }
     }
 }

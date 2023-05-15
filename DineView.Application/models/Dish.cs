@@ -17,6 +17,7 @@ namespace DineView.Application.models
             Description = description;
             Calories = calories;
             IsSpicy = isSpicy;
+            Guid = Guid.NewGuid();
         }
         
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -28,7 +29,7 @@ namespace DineView.Application.models
         public string Description { get; set; }
         public float Calories { get; set; }
         public bool IsSpicy { get; set; }
+        public Guid Guid { get; set; }
         public virtual ICollection<Menu> Menus { get; } = new List<Menu>();
-
     }
 }
