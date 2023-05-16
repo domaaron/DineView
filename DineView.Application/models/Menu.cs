@@ -8,9 +8,10 @@ namespace DineView.Application.models
 {
     public class Menu
     {
-        public Menu(decimal price, Restaurant restaurant, Dish dish)
+        public Menu(decimal price, Restaurant restaurant, Dish dish, bool isSpicy)
         {
             Price = price;
+            IsSpicy = isSpicy;
             Restaurant = restaurant;
             RestaurantId = restaurant.Id;
             Dish = dish;
@@ -24,6 +25,7 @@ namespace DineView.Application.models
 
         public int Id { get; private set; }
         public decimal Price { get; set; }
+        public bool IsSpicy { get; set; }
         public virtual Restaurant Restaurant { get; set; }
         public int RestaurantId { get; set; }
         public virtual Dish Dish { get; set; }

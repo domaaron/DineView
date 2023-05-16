@@ -60,8 +60,7 @@ namespace DineView.Application.infrastructure
             var dish = new Faker<Dish>("en").CustomInstantiator(d => new Dish(
                 name: d.Commerce.ProductName(),
                 description: d.Commerce.ProductDescription(),
-                calories: (float)Math.Round(d.Random.Float(10, 500)),
-                isSpicy: d.Random.Bool()
+                calories: (float)Math.Round(d.Random.Float(10, 500))
                 ))
                 .Generate(100)
                 .ToList();
@@ -74,7 +73,7 @@ namespace DineView.Application.infrastructure
                 openingTime: r.Date.BetweenTimeOnly(new TimeOnly(8, 0, 0), new TimeOnly(11, 0, 0)),
                 closedTime: r.Date.BetweenTimeOnly(new TimeOnly(20, 0, 0), new TimeOnly(22, 0, 0)),
                 cuisine: r.Random.ListItem(cuisine),
-                isOrderable: r.Random.Bool(),
+                isOrderable: r.Random.Bool(0.30f),
                 rating: $"{r.Random.Int(1, 10)} / 10",
                 tel: r.Phone.PhoneNumber(),
                 uRL: r.Internet.Url()
@@ -86,6 +85,7 @@ namespace DineView.Application.infrastructure
 
             var menu = new Faker<Menu>("en").CustomInstantiator(m => new Menu(
                 price: Math.Round(m.Random.Decimal(3, 50)),
+                isSpicy: m.Random.Bool(),
                 restaurant: m.Random.ListItem(restaurant),
                 dish: m.Random.ListItem(dish)
                 ))
