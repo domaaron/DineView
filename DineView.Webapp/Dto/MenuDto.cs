@@ -8,9 +8,6 @@ namespace DineView.Webapp.Dto
         Guid guid,
         [Range(2, 500, ErrorMessage = "Invalid price")]
         decimal Price,
-        string Description,
-        float Calories,
-        bool IsSpicy,
         Guid DishGuid,
         Guid RestaurantGuid
     );

@@ -1,8 +1,14 @@
 ﻿@page "{guid}"
 @model DineView.Webapp.Pages.Restaurants.DetailsModel
+@section Head {
+    <style>
+        .row {
+            margin-bottom: 10px;
+        }
+    </style>
+}
 
 <h3>Details of the restaurant @Model.Restaurant.Name</h3>
-
 <h4>New Menu</h4>
 
 <form method="post" asp-page-handler="NewMenu">
@@ -10,41 +16,16 @@
         <div class="col-6">
             <label asp-for="NewMenu.DishGuid">Dish</label>
             <select class="form-select"
-                asp-items="@Model.DishSelectList"
-                asp-for="NewMenu.DishGuid"></select>
+                    asp-items="@Model.DishSelectList"
+                    asp-for="NewMenu.DishGuid"></select>
         </div>
 
         <div class="col-6">
-            <label asp-for="NewMenu.Description">Description</label>
-            <input type="text" class="form-control" asp-for="NewMenu.Description" />
-            <small>
-                <span class="text-danger" asp-validation-for="NewMenu.Description"></span>
-            </small>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6">
             <label asp-for="NewMenu.Price">Price</label>
             <input class="form-control" asp-for="NewMenu.Price" />
             <small>
                 <span class="text-danger" asp-validation-for="NewMenu.Price"></span>
             </small>
-        </div>
-
-        <div class="col-sm-6">
-            <label asp-for="NewMenu.Calories">Calories</label>
-            <input type="text" class="form-control" asp-for="NewMenu.Calories" />
-            <small>
-                <span class="text-danger" asp-validation-for="NewMenu.Calories"></span>
-            </small>
-        </div>
-    </div>
-
-    <div class="row">
-        <div>
-            <label class="form-check-label" asp-for="NewMenu.IsSpicy">IsSpicy</label>
-            <input type="checkbox" class="form-check-input" asp-for="NewMenu.IsSpicy" />
         </div>
     </div>
 
@@ -60,7 +41,6 @@
             <th>Name</th>
             <th>Description</th>
             <th>Calories</th>
-            <th>IsSpicy</th>
         </tr>
     </thead>
     <tbody>
@@ -71,7 +51,6 @@
                 <td>@m.Dish.Name</td>
                 <td>@m.Dish.Description</td>
                 <td>@m.Dish.Calories</td>
-                <td>@m.Dish.IsSpicy</td>
             </tr>
         }
     </tbody>
