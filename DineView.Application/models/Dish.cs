@@ -11,12 +11,11 @@ namespace DineView.Application.models
     [Table("Dish")]
     public class Dish
     {
-        public Dish(string name, string description, float calories, bool isSpicy)
+        public Dish(string name, string description, float calories)
         {
             Name = name;
             Description = description;
             Calories = calories;
-            IsSpicy = isSpicy;
             Guid = Guid.NewGuid();
         }
         
@@ -28,7 +27,6 @@ namespace DineView.Application.models
         public string Name { get; set; }
         public string Description { get; set; }
         public float Calories { get; set; }
-        public bool IsSpicy { get; set; }
         public Guid Guid { get; set; }
         public virtual ICollection<Menu> Menus { get; } = new List<Menu>();
     }
