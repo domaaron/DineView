@@ -34,27 +34,45 @@
 </form>
 
 <h4>Menu</h4>
-<table class="table table-sm">
-    <thead>
-        <tr>
-            <th>Price</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Calories</th>
-            <th>IsSpicy</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var m in Model.Menus.OrderBy(m => m.Dish.Name))
-        {
+<form method="post" asp-page-handler="EditMenu">
+    <table class="table table-sm">
+        <thead>
             <tr>
-                <td>@m.Price</td>
-                <td>@m.Dish.Name</td>
-                <td>@m.Dish.Description</td>
-                <td>@m.Dish.Calories</td>
-                <td>@m.IsSpicy</td>
+                <th>Price</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Calories</th>
+                <th>IsSpicy</th>
+                <th>Action</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var m in Model.Menus.OrderBy(m => m.Dish.Name))
+            {
+                <tr>
+                    <td>
+                        <input class="form-control" asp-for="EditMenus[m.Guid].Price" />
+                        <small>
+                            <span class="text-danger" asp-validation-for="EditMenus[m.Guid].Price"></span>
+                        </small>
+                    </td>
+                    <td>@m.Dish.Name</td>
+                    <td>@m.Dish.Description</td>
+                    <td>@m.Dish.Calories</td>
+                    <td>
+                        <input asp-for="EditMenus[m.Guid].IsSpicy" />
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" 
+                            type="submit"
+                            asp-page-handler="EditMenu"
+                            asp-route-menuGuid="@m.Guid">
+                            Save
+                    </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
 
