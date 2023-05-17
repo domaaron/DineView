@@ -14,6 +14,7 @@ namespace DineView.Webapp.Dto
                 .ForMember(
                     m => m.Guid,
                     opt => opt.MapFrom(m => m.guid == default ? Guid.NewGuid() : m.guid));
+            CreateMap<Menu, MenuDto>();
         }
     }
 }
