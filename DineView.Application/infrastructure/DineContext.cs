@@ -22,11 +22,11 @@ namespace DineView.Application.infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Menu>().HasAlternateKey(m => m.Guid);
-            modelBuilder.Entity<Menu>().Property(m => m.Guid).ValueGeneratedOnAdd();
+            //modelBuilder.Entity<Menu>().HasAlternateKey(m => m.Guid);
+            //modelBuilder.Entity<Menu>().Property(m => m.Guid).ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<Dish>().HasAlternateKey(d => d.Guid);
-            modelBuilder.Entity<Dish>().Property(d => d.Guid).ValueGeneratedOnAdd();
+            //modelBuilder.Entity<Dish>().HasAlternateKey(d => d.Guid);
+            //modelBuilder.Entity<Dish>().Property(d => d.Guid).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Restaurant>().OwnsOne(r => r.Address);
             modelBuilder.Entity<Restaurant>().HasAlternateKey(r => r.Guid);
