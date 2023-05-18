@@ -1,6 +1,7 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DineView.Application.infrastructure;
+using DineView.Application.infrastructure.Repositories;
 using DineView.Application.models;
 using DineView.Webapp.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,19 @@ namespace DineView.Webapp.Pages.Restaurants
 {
     public class DetailsModel : PageModel
     {
-        private readonly DineContext _db;
+        private readonly RestaurantRepository _restaurants;
+        private readonly DishRepository _dishes;
+        private readonly MenuRepository _menus;
+
+
         private readonly IMapper _mapper;
 
-        public DetailsModel(DineContext db, IMapper mapper)
+        public DetailsModel(IMapper mapper, RestaurantRepository restaurant, DishRepository dishes, MenuRepository menus)
         {
-            _db = db;
             _mapper = mapper;
+            _restaurants = restaurant;
+            _dishes = dishes;
+            _menus = menus;
         }
         [FromRoute]
         public Guid Guid { get; set; }
@@ -33,7 +40,7 @@ namespace DineView.Webapp.Pages.Restaurants
         public IReadOnlyList<Menu> Menus { get; private set; } = new List<Menu>();
         public Dictionary<Guid, MenuDto> EditMenus { get; set; } = new();
         public IEnumerable<SelectListItem> DishSelectList =>
-            _db.Dishes.OrderBy(d => d.Name).Select(d => new SelectListItem(d.Name, d.Guid.ToString()));
+            _dishes.Set.OrderBy(d => d.Name).Select(d => new SelectListItem(d.Name, d.Guid.ToString()));
 
         public IActionResult OnPostEditMenu(Guid guid, Guid menuGuid, Dictionary<Guid, MenuDto> editMenus)
         {
@@ -42,7 +49,7 @@ namespace DineView.Webapp.Pages.Restaurants
                 return Page();
             }
 
-            var menu = _db.Menus.FirstOrDefault(m => m.Guid == menuGuid);
+            var menu = _menus.FindByGuid(menuGuid);
             
             if (menu is null)
             {
@@ -50,15 +57,11 @@ namespace DineView.Webapp.Pages.Restaurants
             }
             
             _mapper.Map(editMenus[menuGuid], menu);
-            _db.Entry(menu).State = EntityState.Modified;
 
-            try
+            var (success, message) = _menus.Update(menu);
+            if (!success)
             {
-                _db.SaveChanges();
-            }
-            catch(DbUpdateException)
-            {
-                ModelState.AddModelError("", "Error while writing to the database");
+                ModelState.AddModelError("", message);
                 return Page();
             }
 
@@ -70,24 +73,16 @@ namespace DineView.Webapp.Pages.Restaurants
             {
                 return Page();
             }
-            try
+
+            var (success, message) = _menus.Insert(
+                price: newMenu.Price,
+                IsSpicy: newMenu.IsSpicy,
+                dishGuid: newMenu.DishGuid,
+                restaurantGuid: guid);
+
+            if (!success)
             {
-                var menu = _mapper.Map<Menu>(newMenu);
-                menu.Dish = _db.Dishes.FirstOrDefault(d => d.Guid == newMenu.DishGuid)
-                    ?? throw new ApplicationException("Invalid dish");
-                menu.Restaurant = _db.Restaurants.FirstOrDefault(r => r.Guid == guid)
-                    ?? throw new ApplicationException("Invalid restaurant");
-                _db.Menus.Add(menu);
-                _db.SaveChanges();
-            }
-            catch(ApplicationException e)
-            {
-                ModelState.AddModelError("", e.Message);
-                return Page();
-            }
-            catch(DbUpdateException)
-            {
-                ModelState.AddModelError("", "Error while writing to the database");
+                ModelState.AddModelError("", message);
                 return Page();
             }
 
@@ -100,7 +95,10 @@ namespace DineView.Webapp.Pages.Restaurants
 
         public override void OnPageHandlerExecuting(PageHandlerExecutingContext context)
         {
-            var restaurant = _db.Restaurants.FirstOrDefault(r => r.Guid == Guid);
+            var restaurant = _restaurants.Set
+                .Include(r => r.Menus)
+                .ThenInclude(r => r.Dish)
+                .FirstOrDefault(r => r.Guid == Guid);
 
             if (restaurant is null)
             {
@@ -109,12 +107,9 @@ namespace DineView.Webapp.Pages.Restaurants
             }
             Restaurant = restaurant;
 
-            Menus = _db.Menus
-                .Include(m => m.Dish)
-                .Where(m => m.Restaurant.Guid == Guid)
-                .ToList();
+            Menus = restaurant.Menus.ToList();
 
-            EditMenus = _db.Menus.Where(m => m.Restaurant.Guid == Guid)
+            EditMenus = _menus.Set.Where(m => m.Restaurant.Guid == Guid)
                 .ProjectTo<MenuDto>(_mapper.ConfigurationProvider)
                 .ToDictionary(m => m.guid, m => m);
         }

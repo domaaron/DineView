@@ -1,4 +1,5 @@
 using DineView.Application.infrastructure;
+using DineView.Application.infrastructure.Repositories;
 using DineView.Webapp.Dto;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,11 @@ builder.Services.AddDbContext<DineContext>(opt =>
 {
     opt.UseSqlite("Data source=DineView.db");
 });
+builder.Services.AddTransient<RestaurantRepository>();
+builder.Services.AddTransient<MenuRepository>();
+builder.Services.AddTransient<DishRepository>();
+builder.Services.AddTransient<CategoryRepository>();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddRazorPages();
 
