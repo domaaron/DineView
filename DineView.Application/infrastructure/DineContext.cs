@@ -29,8 +29,17 @@ namespace DineView.Application.infrastructure
             //modelBuilder.Entity<Dish>().Property(d => d.Guid).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Restaurant>().OwnsOne(r => r.Address);
-            modelBuilder.Entity<Restaurant>().HasAlternateKey(r => r.Guid);
-            modelBuilder.Entity<Restaurant>().Property(r => r.Guid).ValueGeneratedOnAdd();
+            //modelBuilder.Entity<Restaurant>().HasAlternateKey(r => r.Guid);
+            //modelBuilder.Entity<Restaurant>().Property(r => r.Guid).ValueGeneratedOnAdd();
+
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                var type = entity.ClrType;
+                if (type.GetProperty("Guid") is not null)
+                {
+                    modelBuilder.Entity(type).HasAlternateKey("Guid");
+                }
+            }
 
             modelBuilder.Entity<Category>()
                 .HasIndex(c => c.Designation)
