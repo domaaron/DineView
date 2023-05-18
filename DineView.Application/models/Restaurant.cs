@@ -10,7 +10,7 @@ namespace DineView.Application.models
 {
     public record Address(string Street, string District);
     [Table("Restaurant")]
-    public class Restaurant
+    public class Restaurant : IEntity<int>
     {
         public Restaurant(string name, Address address, TimeOnly openingTime, TimeOnly closedTime, Cuisine cuisine, bool isOrderable, string rating, string tel, string uRL)
         {

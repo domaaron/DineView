@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DineView.Application.models
 {
-    public class Menu
+    public class Menu : IEntity<int>
     {
         public Menu(decimal price, Restaurant restaurant, Dish dish, bool isSpicy)
         {
@@ -30,6 +30,6 @@ namespace DineView.Application.models
         public int RestaurantId { get; set; }
         public virtual Dish Dish { get; set; }
         public int DishId { get; set; }
-        public Guid Guid { get; set; }
+        public Guid Guid { get; private set; }
     }
 }

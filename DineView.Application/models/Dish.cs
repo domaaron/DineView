@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DineView.Application.models
 {
     [Table("Dish")]
-    public class Dish
+    public class Dish : IEntity<int>
     {
         public Dish(string name, string description, float calories)
         {
@@ -27,7 +27,7 @@ namespace DineView.Application.models
         public string Name { get; set; }
         public string Description { get; set; }
         public float Calories { get; set; }
-        public Guid Guid { get; set; }
+        public Guid Guid { get; private set; }
         public virtual ICollection<Menu> Menus { get; } = new List<Menu>();
     }
 }
