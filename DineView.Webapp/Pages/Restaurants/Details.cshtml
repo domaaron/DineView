@@ -51,6 +51,7 @@
             {
                 <tr>
                     <td>
+                        <input type="hidden" asp-for="EditMenus[m.Guid].guid" />
                         <input class="form-control" asp-for="EditMenus[m.Guid].Price" />
                         <small>
                             <span class="text-danger" asp-validation-for="EditMenus[m.Guid].Price"></span>
