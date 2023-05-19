@@ -6,13 +6,25 @@
         .notOrderable {
             background-color: lightgray;
         }
+
+        .table-md {
+            font-size: 14px;
+            padding: 10px;
+        }
     </style>
 }
 
 <h3>Restaurants in the database</h3>
 <p>@Model.Restaurants.Count Restaurants found. Created at @DateTime.Now.ToString("HH:mm")</p>
 
-<table class="table table-sm">
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="border border-danger p-3 border-3">
+        <p class="mb-0">@Model.Message</p>
+    </div>
+}
+
+<table class="table table-md">
     <thead>
         <tr>
             <th>Name</th>
@@ -46,8 +58,9 @@
                 <td>@r.Tel</td>
                 <td>@r.URL</td>
                 <td>
-                    <a asp-page="/Restaurants/Details" asp-route-guid="@r.Guid">Details</a>
-                    <a asp-page="/Restaurants/Edit" asp-route-guid="@r.Guid">Edit</a>
+                    <a asp-page="/Restaurants/Details" asp-route-guid="@r.Guid"><i class="fa-solid fa-circle-info"></i></a>
+                    <a asp-page="/Restaurants/Edit" asp-route-guid="@r.Guid"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a asp-page="/Restaurants/Delete" asp-route-guid="@r.Guid"><i class="fa-solid fa-trash"></i></a>
                 </td>
             </tr>
         }
