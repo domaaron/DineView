@@ -19,6 +19,10 @@ namespace DineView.Webapp.Pages.Restaurants
             _restaurants = restaurants;
         }
 
+        //Error message for delete
+        [TempData]
+        public string? Message { get; set; }
+
         public IReadOnlyList<RestaurantRepository.DinesWithMenusCount> Restaurants { get; private set; } = new List<RestaurantRepository.DinesWithMenusCount>();
 
         public void OnGet()
