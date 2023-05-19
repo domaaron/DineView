@@ -39,6 +39,7 @@ namespace DineView.Webapp.Pages.Restaurants
         public Restaurant Restaurant { get; private set; } = default!;
         public IReadOnlyList<Menu> Menus { get; private set; } = new List<Menu>();
         public Dictionary<Guid, MenuDto> EditMenus { get; set; } = new();
+        public Dictionary<Guid, bool> MenusToDelete { get; set; } = new();
         public IEnumerable<SelectListItem> DishSelectList =>
             _dishes.Set.OrderBy(d => d.Name).Select(d => new SelectListItem(d.Name, d.Guid.ToString()));
 
@@ -88,6 +89,29 @@ namespace DineView.Webapp.Pages.Restaurants
 
             return RedirectToPage();
         }
+
+        public IActionResult OnPostDelete(Guid guid, Dictionary<Guid, bool> menusToDelete)
+        {
+            var menusDb = _menus.Set
+                .Where(m => m.Restaurant.Guid == guid)
+                .ToDictionary(m => m.Guid, m => m);
+
+            var menusGuids = menusToDelete
+                .Where(m => m.Value == true)
+                .Select(m => m.Key);
+
+            foreach (var m in menusGuids)
+            {
+                if (!menusDb.TryGetValue(m, out var menu))
+                {
+                    continue;
+                }
+                _menus.Delete(menu);
+            }
+
+            return RedirectToPage();
+        }
+
         public IActionResult OnGet(Guid guid)
         {
             return Page();
@@ -105,10 +129,10 @@ namespace DineView.Webapp.Pages.Restaurants
                 context.Result = RedirectToPage("/Restaurants/Index");
                 return;
             }
+
             Restaurant = restaurant;
-
             Menus = restaurant.Menus.ToList();
-
+            MenusToDelete = Menus.ToDictionary(m => m.Guid, m => false);
             EditMenus = _menus.Set.Where(m => m.Restaurant.Guid == Guid)
                 .ProjectTo<MenuDto>(_mapper.ConfigurationProvider)
                 .ToDictionary(m => m.guid, m => m);

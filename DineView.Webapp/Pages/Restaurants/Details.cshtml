@@ -44,6 +44,7 @@
                 <th>Calories</th>
                 <th>IsSpicy</th>
                 <th>Action</th>
+                <th>Delete?</th>
             </tr>
         </thead>
         <tbody>
@@ -61,7 +62,7 @@
                     <td>@m.Dish.Description</td>
                     <td>@m.Dish.Calories</td>
                     <td>
-                        <input asp-for="EditMenus[m.Guid].IsSpicy" />
+                        <input class="form-check-input" asp-for="EditMenus[m.Guid].IsSpicy" />
                     </td>
                     <td>
                         <button class="btn btn-primary" 
@@ -71,9 +72,13 @@
                             Save
                     </button>
                     </td>
+                    <td>
+                        <input class="form-check-input" asp-for="MenusToDelete[m.Guid]" />
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+    <button type="submit" class="btn btn-danger" asp-page-handler="Delete">Delete selected</button>
 </form>
 
