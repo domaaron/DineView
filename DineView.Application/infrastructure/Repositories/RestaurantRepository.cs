@@ -42,11 +42,10 @@ namespace DineView.Application.infrastructure.Repositories
 
         public override (bool success, string message) Delete(Restaurant restaurant)
         {
-            if (restaurant.Menus.Count > 0)
-            {
-                return (false, "Restaurant has no menus");
+            if (restaurant.Rating.Equals("10 / 10")) {
+                return (false, $"The restaurant {restaurant.Name} can not be closed.");
             }
-            //TODO: testen
+
             return base.Delete(restaurant);
         }
     }
