@@ -99,6 +99,7 @@ namespace DineView.Application.infrastructure
                 dish: m.Random.ListItem(dish)
                 ))
                 .Generate(100)
+                .DistinctBy(m => m.Dish)
                 .ToList();
             Menus.AddRange(menu);
             SaveChanges();
