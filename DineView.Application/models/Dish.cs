@@ -12,14 +12,19 @@ namespace DineView.Application.models
     [Table("Dish")]
     public class Dish : IEntity<int>
     {
-        public Dish(string name, string description, float calories)
+        public Dish(string name, string description, float calories, TimeSpan? preparationTime, Category category)
         {
             Name = name;
             Description = description;
             Calories = calories;
+            PreparationTime = preparationTime;
             Guid = Guid.NewGuid();
+            Category = category;
+            CategoryId = category.Id;
         }
-        
+
+
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         protected Dish() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -28,7 +33,10 @@ namespace DineView.Application.models
         public string Name { get; set; }
         public string Description { get; set; }
         public float Calories { get; set; }
+        public TimeSpan? PreparationTime { get; set; }
         public Guid Guid { get; private set; }
+        public virtual Category Category { get; set; }
+        public int CategoryId { get; set; }
         public virtual ICollection<Menu> Menus { get; } = new List<Menu>();
     }
 }

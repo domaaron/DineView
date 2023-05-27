@@ -24,6 +24,5 @@ namespace DineView.Application.models
         public int Id { get; private set; }
         public String Designation { get; set; }
         public Guid Guid { get; private set; }
-        public List<Menu> Menus { get; } = new();
     }
 }

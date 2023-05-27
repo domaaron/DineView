@@ -12,6 +12,17 @@ namespace DineView.Application.infrastructure
 {
     public class DineContext : DbContext
     {
+        //Rounding preparationTime value to the nearest whole minute
+        private static TimeSpan RoundToNearestMinuteAndSecond(TimeSpan timeSpan)
+        {
+            var totalSeconds = (int)timeSpan.TotalSeconds;
+            var roundedMinutes = (totalSeconds + 30) / 60;
+            var roundedSeconds = 0;
+            return TimeSpan.FromMinutes(roundedMinutes).Add(TimeSpan.FromSeconds(roundedSeconds));
+        }
+
+
+
         public DineContext(DbContextOptions opt) : base(opt) { }
 
         public DbSet<Category> Categories => Set<Category>();
@@ -22,15 +33,7 @@ namespace DineView.Application.infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Menu>().HasAlternateKey(m => m.Guid);
-            //modelBuilder.Entity<Menu>().Property(m => m.Guid).ValueGeneratedOnAdd();
-
-            //modelBuilder.Entity<Dish>().HasAlternateKey(d => d.Guid);
-            //modelBuilder.Entity<Dish>().Property(d => d.Guid).ValueGeneratedOnAdd();
-
             modelBuilder.Entity<Restaurant>().OwnsOne(r => r.Address);
-            //modelBuilder.Entity<Restaurant>().HasAlternateKey(r => r.Guid);
-            //modelBuilder.Entity<Restaurant>().Property(r => r.Guid).ValueGeneratedOnAdd();
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
@@ -69,7 +72,9 @@ namespace DineView.Application.infrastructure
             var dish = new Faker<Dish>("en").CustomInstantiator(d => new Dish(
                 name: d.Commerce.ProductName(),
                 description: d.Commerce.ProductDescription(),
-                calories: (float)Math.Round(d.Random.Float(10, 500))
+                calories: (float)Math.Round(d.Random.Float(10, 500)),
+                preparationTime: RoundToNearestMinuteAndSecond(TimeSpan.FromMinutes(d.Random.Double(10, 120))),
+                category: d.Random.ListItem(category)
                 ))
                 .Generate(100)
                 .ToList();

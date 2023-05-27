@@ -1,0 +1,28 @@
+﻿@page
+@model DineView.Webapp.Pages.Dishes.IndexModel
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Calories</th>
+            <th>PreparationTime</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in Model.Dishes)
+        {
+            <tr>
+                <td>@d.Id</td>
+                <td>@d.Name</td>
+                <td>@d.Description</td>
+                <td>@d.Calories</td>
+                <td>@d.PreparationTime</td>
+                <td>@d.Category.Designation</td>
+            </tr>
+        }
+    </tbody>
+</table>

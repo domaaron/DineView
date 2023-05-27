@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace DineView.Application.models
 {
     [Index(nameof(DishId), IsUnique = true)]
+    [Table("Menu")]
     public class Menu : IEntity<int>
     {
         public Menu(decimal price, Restaurant restaurant, Dish dish, bool isSpicy)
