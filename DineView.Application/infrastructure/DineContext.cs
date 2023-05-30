@@ -21,8 +21,6 @@ namespace DineView.Application.infrastructure
             return TimeSpan.FromMinutes(roundedMinutes).Add(TimeSpan.FromSeconds(roundedSeconds));
         }
 
-
-
         public DineContext(DbContextOptions opt) : base(opt) { }
 
         public DbSet<Category> Categories => Set<Category>();
@@ -30,6 +28,7 @@ namespace DineView.Application.infrastructure
         public DbSet<Dish> Dishes => Set<Dish>();
         public DbSet<Menu> Menus => Set<Menu>();
         public DbSet<Restaurant> Restaurants => Set<Restaurant>();
+        public DbSet<User> Users => Set<User>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,9 +48,19 @@ namespace DineView.Application.infrastructure
                 .IsUnique();
         }
 
-        public void Seed()
+        public void Seed(ICryptService cryptService)
         {
             Randomizer.Seed = new Random(2169);
+
+            var adminSalt = cryptService.GenerateSecret(256);
+            var admin = new User(
+                username: "admin",
+                salt: adminSalt,
+                passwordHash: cryptService.GenerateHash(adminSalt, "1234"),
+                usertype: Usertype.Admin
+                );
+            Users.Add(admin);
+            SaveChanges();
 
             var category = new Faker<Category>("en").CustomInstantiator(c => new Category(
                 designation: $"{c.Commerce.ProductMaterial()} {c.Commerce.ProductMaterial()}"
@@ -81,19 +90,33 @@ namespace DineView.Application.infrastructure
             Dishes.AddRange(dish);
             SaveChanges();
 
-            var restaurant = new Faker<Restaurant>().CustomInstantiator(r => new Restaurant(
-                name: r.Company.CompanyName(),
-                address: new Address(r.Address.StreetName(), r.Address.StreetSuffix()),
-                openingTime: r.Date.BetweenTimeOnly(new TimeOnly(8, 0, 0), new TimeOnly(11, 0, 0)),
-                closedTime: r.Date.BetweenTimeOnly(new TimeOnly(20, 0, 0), new TimeOnly(22, 0, 0)),
-                cuisine: r.Random.ListItem(cuisine),
-                isOrderable: r.Random.Bool(0.30f),
-                rating: $"{r.Random.Int(1, 10)} / 10",
-                tel: r.Phone.PhoneNumber(),
-                uRL: r.Internet.Url()
-                ))
-                .Generate(10)
-                .ToList();
+            var i = 0;
+            var restaurant = new Faker<Restaurant>("en").CustomInstantiator(r =>
+            {
+                var name = r.Company.CompanyName();
+                var salt = cryptService.GenerateSecret(256);
+                var username = $"restaurant{++i:000}";
+                return new Restaurant(
+                    name: r.Company.CompanyName(),
+                    address: new Address(r.Address.StreetName(), r.Address.StreetSuffix()),
+                    openingTime: r.Date.BetweenTimeOnly(new TimeOnly(8, 0, 0), new TimeOnly(11, 0, 0)),
+                    closedTime: r.Date.BetweenTimeOnly(new TimeOnly(20, 0, 0), new TimeOnly(22, 0, 0)),
+                    cuisine: r.Random.ListItem(cuisine),
+                    isOrderable: r.Random.Bool(0.30f),
+                    rating: $"{r.Random.Int(1, 10)} / 10",
+                    tel: r.Phone.PhoneNumber(),
+                    uRL: r.Internet.Url(),
+                    manager: new User(
+                        username: username,
+                        salt: salt,
+                        passwordHash: cryptService.GenerateHash(salt, "1234"),
+                        usertype: Usertype.Owner
+                        )
+                    );
+            })
+            .Generate(10)
+            .GroupBy(r => r.Name).Select(g => g.First())
+            .ToList();
             Restaurants.AddRange(restaurant);
             SaveChanges();
 

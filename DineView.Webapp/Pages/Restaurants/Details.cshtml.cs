@@ -4,6 +4,8 @@ using DineView.Application.infrastructure;
 using DineView.Application.infrastructure.Repositories;
 using DineView.Application.models;
 using DineView.Webapp.Dto;
+using DineView.Webapp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,25 +18,26 @@ using System.Linq;
 
 namespace DineView.Webapp.Pages.Restaurants
 {
+    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly RestaurantRepository _restaurants;
         private readonly DishRepository _dishes;
         private readonly MenuRepository _menus;
-
-
         private readonly IMapper _mapper;
+        private readonly AuthService _authService;
 
-        public DetailsModel(IMapper mapper, RestaurantRepository restaurant, DishRepository dishes, MenuRepository menus)
+        public DetailsModel(IMapper mapper, RestaurantRepository restaurant, DishRepository dishes, MenuRepository menus, AuthService authService)
         {
             _mapper = mapper;
             _restaurants = restaurant;
             _dishes = dishes;
             _menus = menus;
+            _authService = authService;
         }
+
         [FromRoute]
         public Guid Guid { get; set; }
-
         public MenuDto NewMenu { get; set; } = default!;
         public Restaurant Restaurant { get; private set; } = default!;
         public IReadOnlyList<Menu> Menus { get; private set; } = new List<Menu>();
@@ -120,6 +123,7 @@ namespace DineView.Webapp.Pages.Restaurants
         public override void OnPageHandlerExecuting(PageHandlerExecutingContext context)
         {
             var restaurant = _restaurants.Set
+                .Include(r => r.Manager)
                 .Include(r => r.Menus)
                 .ThenInclude(r => r.Dish)
                 .FirstOrDefault(r => r.Guid == Guid);
@@ -127,6 +131,13 @@ namespace DineView.Webapp.Pages.Restaurants
             if (restaurant is null)
             {
                 context.Result = RedirectToPage("/Restaurants/Index");
+                return;
+            }
+
+            var username = _authService.Username;
+            if (!_authService.HasRole("Admin") && username != restaurant.Manager?.Username)
+            {
+                context.Result = new ForbidResult();
                 return;
             }
 

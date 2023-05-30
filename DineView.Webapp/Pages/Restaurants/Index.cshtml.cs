@@ -1,6 +1,7 @@
 using DineView.Application.infrastructure;
 using DineView.Application.infrastructure.Repositories;
 using DineView.Application.models;
+using DineView.Webapp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace DineView.Webapp.Pages.Restaurants
     public class IndexModel : PageModel
     {
         private readonly RestaurantRepository _restaurants;
+        private readonly AuthService _authService;
 
-        public IndexModel(RestaurantRepository restaurants)
+        public IndexModel(RestaurantRepository restaurants, AuthService authService)
         {
             _restaurants = restaurants;
+            _authService = authService;
         }
 
         //Error message for delete
@@ -29,5 +32,8 @@ namespace DineView.Webapp.Pages.Restaurants
         {
             Restaurants = _restaurants.GetDinesWithMenus();
         }
+
+        public bool CanEditRestaurant(Guid restaurantGuid) =>
+            _authService.IsAdmin || Restaurants.FirstOrDefault(r => r.Guid == restaurantGuid)?.Manager?.Username == _authService.Username;
     }
 }

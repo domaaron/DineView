@@ -1,11 +1,13 @@
 using DineView.Application.infrastructure.Repositories;
 using DineView.Application.models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 
 namespace DineView.Webapp.Pages.Restaurants
 {
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly RestaurantRepository _restaurants;

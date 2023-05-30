@@ -1,5 +1,6 @@
 using DineView.Application.infrastructure.Repositories;
 using DineView.Application.models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace DineView.Webapp.Pages.Dishes
 {
+    [Authorize(Roles = "Admin, Owner")]
     public class IndexModel : PageModel
     {
         private readonly DishRepository _dishes;

@@ -1,0 +1,30 @@
+﻿@page
+@model DineView.Webapp.Pages.User.IndexModel
+<h3>User table</h3>
+<p>
+    This table shows all created users. It is for illustration purposes only and should never be published in real programs.
+</p>
+
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Type</th>
+            <th>Salt</th>
+            <th>Password Hash</th>
+            <th>Restaurant(s)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var u in Model.Users)
+        {
+            <tr>
+                <td>@u.Username</td>
+                <td>@u.Usertype</td>
+                <td><pre>@u.Salt</pre></td>
+                <td><pre>@u.PasswordHash</pre></td>
+                <td>@string.Join(", ", u.Restaurants.Select(r => r.Name).OrderBy(r => r))</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -58,9 +58,12 @@
                 <td>@r.Tel</td>
                 <td>@r.URL</td>
                 <td>
-                    <a asp-page="/Restaurants/Details" asp-route-guid="@r.Guid"><i class="fa-solid fa-circle-info"></i></a>
-                    <a asp-page="/Restaurants/Edit" asp-route-guid="@r.Guid"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a asp-page="/Restaurants/Delete" asp-route-guid="@r.Guid"><i class="fa-solid fa-trash"></i></a>
+                    @if (Model.CanEditRestaurant(r.Guid))
+                    {
+                        <a asp-page="/Restaurants/Details" asp-route-guid="@r.Guid"><i class="fa-solid fa-circle-info"></i></a>
+                        <a asp-page="/Restaurants/Edit" asp-route-guid="@r.Guid"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a asp-page="/Restaurants/Delete" asp-route-guid="@r.Guid"><i class="fa-solid fa-trash"></i></a>
+                    }
                 </td>
             </tr>
         }

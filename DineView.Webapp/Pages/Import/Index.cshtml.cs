@@ -1,4 +1,5 @@
 using DineView.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace DineView.Webapp.Pages.Import
 {
+    [Authorize(Roles = "Admin")]
     public class IndexModel : PageModel
     {
         private static string[] _allowedTextExtensions = { ".txt", ".csv" };

@@ -16,7 +16,8 @@ namespace DineView.Application.infrastructure.Repositories
                 bool IsOrderable,
                 string Rating,
                 string Tel,
-                string URL
+                string URL,
+                User? Manager
          );
 
         public RestaurantRepository(DineContext db) : base(db) { }
@@ -35,7 +36,8 @@ namespace DineView.Application.infrastructure.Repositories
                     r.IsOrderable,
                     r.Rating,
                     r.Tel,
-                    r.URL
+                    r.URL,
+                    r.Manager
                     ))
                 .ToList();
         }

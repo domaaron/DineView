@@ -12,7 +12,7 @@ namespace DineView.Application.models
     [Table("Restaurant")]
     public class Restaurant : IEntity<int>
     {
-        public Restaurant(string name, Address address, TimeOnly openingTime, TimeOnly closedTime, Cuisine cuisine, bool isOrderable, string rating, string tel, string uRL)
+        public Restaurant(string name, Address address, TimeOnly openingTime, TimeOnly closedTime, Cuisine cuisine, bool isOrderable, string rating, string tel, string uRL, User? manager = null)
         {
             Name = name;
             Guid = Guid.NewGuid();
@@ -25,6 +25,7 @@ namespace DineView.Application.models
             Rating = rating;
             Tel = tel;
             URL = uRL;
+            Manager = manager;
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -44,6 +45,8 @@ namespace DineView.Application.models
         public string Rating { get; set; }
         public string Tel { get; set; }
         public string URL { get; set; }
+        public int? ManagerId { get; set; }
+        public User? Manager { get; set; }
         public ICollection<Menu> Menus { get; } = new List<Menu>();
         public void ChangeOrderable(bool isOrderable)
         {

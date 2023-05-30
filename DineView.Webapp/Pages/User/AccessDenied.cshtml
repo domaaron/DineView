@@ -1,0 +1,8 @@
+﻿@page
+@model DineView.Webapp.Pages.User.AccessDeniedModel
+@inject DineView.Webapp.Services.AuthService AuthService
+
+<h3>No access</h3>
+
+<p>The user @AuthService.Username has no access to the requested page.</p>
+<p><a href="/">Back to the index</a></p>

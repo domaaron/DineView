@@ -2,6 +2,7 @@ using AutoMapper;
 using DineView.Application.infrastructure;
 using DineView.Application.models;
 using DineView.Webapp.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace DineView.Webapp.Pages.Restaurants
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly DineContext _db;
