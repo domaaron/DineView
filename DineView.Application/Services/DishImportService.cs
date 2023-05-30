@@ -55,7 +55,7 @@ namespace DineView.Application.Services
                 {
                     string? val = args.Row["PreparationTime"];
                     if (string.IsNullOrEmpty(val)) { return null; }
-                    return TimeSpan.ParseExact(val, "hh:mm.ss", CultureInfo.InvariantCulture);
+                    return TimeSpan.ParseExact(val, @"hh\:mm\:ss", CultureInfo.InvariantCulture);
                 });
                 Map(row => row.CategoryDesignation).Name("CategoryDesignation").TypeConverter<NotNullStringConverter>();
             }
