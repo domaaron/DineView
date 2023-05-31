@@ -29,5 +29,9 @@
 - In Abhängigkeit vom Benutzer, der sich eingeloggt hat, werden die Links zum Editieren oder Löschen eines Objektes angezeigt. (Die Indexseite des Beispiels aus dem Unterricht zeigt Stores an und die Editier- bzw. Löschmöglichkeit für Stores wird nur dem Manager eines Stores angezeigt.)
 - Der Import von Daten einer hochgeladenen Datei wird zur Verfügung gestellt.
 
-## Homepage ##
+## Entity-Relationship-Modell
+![image](https://github.com/domaaron/DineView/assets/119418922/7c21de29-8449-4b9e-8243-6d576b4fac51)
+
+
+## Homepage
 ![DineView](https://github.com/domaaron/DineView/assets/119418922/b4d647b9-77ad-4de0-88e8-f8983388951c)
