@@ -18,7 +18,7 @@
 - Umsetzung einer Authentifizierung und Authorisierung über eine Login-Seite. Definieren Sie Seiten, die allen Benutzern zur Verfügung stehen, und Seiten, die nur bestimmten Benutzern zur Verfügung stehen.
 - Während der Verwendung der Webapplikation dürfen dem Benutzer keine Exceptions angezeigt werden und fehlerhafte Funktionalitäten dürfen nicht enthalten sein. Dies soll auch der Fall sein, wenn beispielsweise ein in der SelectList ausgewähltes Objekt zum Zeitpunkt der Speicherung des verbundenen Objektes nicht mehr in der Datenbank vorhanden ist. (Die Detailseite des Beispiels aus dem Unterricht überprüft, ob beim Hinzufügen eines Offer Objektes das ausgewählte Produkt noch in der Datenbank gespeichert ist.)
     
-## Erweiterungsmöglichkeiten für eine bessere Beurteilung: ##
+**Erweiterungsmöglichkeiten für eine bessere Beurteilung:**
 
 - Die CRUD Operationen sind für weitere Modelklassen implementiert.
 - Abfrageoptimierungen, sodass beispielsweise in der Indexseite die Anzahl der verbundenen Objekte ohne dem Auslesen der Objekte selbst ermittelt wird.
@@ -28,3 +28,6 @@
 - Die Validierungen der Eingabefelder werden mit Hilfe in der Datenbank gespeicherter Werte durchgeführt.
 - In Abhängigkeit vom Benutzer, der sich eingeloggt hat, werden die Links zum Editieren oder Löschen eines Objektes angezeigt. (Die Indexseite des Beispiels aus dem Unterricht zeigt Stores an und die Editier- bzw. Löschmöglichkeit für Stores wird nur dem Manager eines Stores angezeigt.)
 - Der Import von Daten einer hochgeladenen Datei wird zur Verfügung gestellt.
+
+## Homepage ##
+![DineView](https://github.com/domaaron/DineView/assets/119418922/b4d647b9-77ad-4de0-88e8-f8983388951c)
