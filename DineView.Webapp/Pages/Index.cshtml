@@ -3,8 +3,33 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@section head{
+    <style>
+        .bg {
+            background-image: url('https://static.vecteezy.com/system/resources/previews/001/948/406/original/wood-table-top-for-display-with-blurred-restaurant-background-free-photo.jpg');
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            background-position: center;
+            background-size: cover;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to DineView</h1>
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+    </style>
+}
+
+<div class="bg"></div>
+<div class="text-center text-white">
+    <h1 class="display-4 text-white">Welcome to DineView</h1>
     <p>Discover your next favourite dining experience with ease</a>.</p>
 </div>
