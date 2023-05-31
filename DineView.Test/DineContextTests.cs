@@ -1,4 +1,5 @@
 ﻿using DineView.Application.infrastructure;
+using FlightBooking.Test;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace DineView.Test
 {
+    
     [Collection("Sequential")]
-    public class DineContextTests
+    public class DineContextTests : DatabaseTest
     {
         private DineContext GetDatabase(bool deleteDb = false)
         {
@@ -34,7 +36,7 @@ namespace DineView.Test
         public void SeedDatabaseTest()
         {
             using var db = GetDatabase(deleteDb: true);
-            db.Seed();
+            db.Seed(new CryptService());
         }
     }
 }
