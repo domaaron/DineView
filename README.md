@@ -34,4 +34,5 @@
 
 
 ## Homepage
-![DineView](https://github.com/domaaron/DineView/assets/119418922/b4d647b9-77ad-4de0-88e8-f8983388951c)
+![Homepage](https://github.com/domaaron/DineView/assets/119418922/14926b50-389f-4da1-ad96-0044dc1bbe7a)
+
