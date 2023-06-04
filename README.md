@@ -30,9 +30,9 @@
 - Der Import von Daten einer hochgeladenen Datei wird zur Verfügung gestellt.
 
 ## Entity-Relationship-Modell
-![image](https://github.com/domaaron/DineView/assets/119418922/7c21de29-8449-4b9e-8243-6d576b4fac51)
-
+![ER_model](https://github.com/domaaron/DineView/assets/119418922/aa3930a9-f254-4ed9-a60f-d18025e2c432)
 
 ## Homepage
-![Homepage](https://github.com/domaaron/DineView/assets/119418922/14926b50-389f-4da1-ad96-0044dc1bbe7a)
+![Homepage](https://github.com/domaaron/DineView/assets/119418922/d85406ae-2626-4f2a-8377-8de5818763c6)
+
 
