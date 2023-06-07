@@ -22,7 +22,6 @@ namespace DineView.Webapp.Pages.Restaurants
             _authService = authService;
         }
 
-        //Error message for delete
         [TempData]
         public string? Message { get; set; }
 
